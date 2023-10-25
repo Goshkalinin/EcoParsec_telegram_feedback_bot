@@ -20,17 +20,6 @@ USERS = {}
 
 
 @dataclass
-class UserRequest(object):
-    """Этот реквест отправим в директус."""
-
-    id: str
-    chat_id: str
-    mail: str
-    photo: list
-    location: str
-
-
-@dataclass
 class UserInfo(object):
     """
     Собираем информацию о пользователе.
@@ -42,6 +31,8 @@ class UserInfo(object):
     state: str
     mail: str
     lang: str
+
+    message: list
 
 
 def get_user_info(update):
@@ -59,7 +50,15 @@ def get_user_info(update):
     user_id = update.message.from_user.id
 
     if user_id not in USERS:
-        user = UserInfo(id=user_id, state='START', mail='', lang='RU')
+        user = UserInfo(
+            id=user_id,
+            state='START',
+            mail='',
+            lang='RU',
+
+            message=[],
+            )
+
         USERS[user_id] = user
 
     return user_id
@@ -89,7 +88,7 @@ def generate_keyboard(buttons_list):
 
 def request_donate(txt, button, url, update, context):
     """
-    Выкатываем пользователю кнопку со ссылкой на донатошну.
+    Выкатываем пользователю кнопку со ссылкой на донатошную.
 
     Args:
         txt (str): потому что разные языки
@@ -143,6 +142,11 @@ def send_message(message, buttons, update, context):
         text=message,
         reply_markup=keyboard,
         )
+
+
+def new_request(user, message):
+    user.message.append(message)
+    print(user)
 
 
 def handle_message(update, context):

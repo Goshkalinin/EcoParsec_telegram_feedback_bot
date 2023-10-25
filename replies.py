@@ -83,14 +83,16 @@ RU = {
 
         '/new_point': [
             RU_MSGS_START['/new_point'],
-            RU_BTNS_START['main'],
+            [RU_DECLINE_BTN],
             'NEW_POINT',
+            'new_request(user)',
             ],
 
         '/write_us': [
             RU_MSGS_START['/write_us'],
             RU_BTNS_START['main'],
             'WRITE_US',
+            'new_request(user, message.text)',
             ],
 
         '/donate': [
@@ -205,6 +207,7 @@ RU = {
             ' - Отлично! Что-то добавим, или отправим?',
             [['Отправить!'], RU_DECLINE_BTN],
             'WRITE_US',
+            'new_request(user, message.text)',
             ],
 
         '/confirm': [
